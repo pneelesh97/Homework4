@@ -128,4 +128,79 @@ void exec_job(struct Job *job)
     run_job_scheduler();
 }
 
+void run_job_scheduler()
+{
+
+    struct Job *job = get_front_queue();
+    if (job != NULL)
+    {
+        if (running_jobs < max_jobs)
+        {
+            exec_job(job);
+            running_jobs++;
+        }
+        else
+        {
+            printf("Jobs is in queue, all cores are occupied, will start the job once any of the cores are freed up\n");
+        }
+    }
+}
+
+void process_command(char *command)
+{
+    char *token = strtok(command, " ");
+
+    int i = 0;
+    char *arr[100];
+    char actualCommand[1000] = "";
+
+    if (strcmp(SUBMIT_CMD, token) == 0)
+    {
+        while (token != NULL)
+        {
+            token = strtok(NULL, " ");
+            arr[i++] = token;
+            if (token != NULL)
+            {
+                strcat(actualCommand, token);
+                strcat(actualCommand, " ");
+            }
+        }
+        submit_job(arr, i, actualCommand);
+    }
+    else if (strcmp(SHOW_JOBS, token) == 0)
+    {
+        display_queue();
+    }
+    else if (strcmp(SUBMIT_HISTORY, token) == 0)
+    {
+        display_completed();
+    }
+}
+
+int main(int argc, char *argv[])
+{
+
+    if (argc < 2)
+    {
+        printf("Usage: %s <max_jobs>\n", argv[0]);
+        exit(1);
+    }
+
+    max_jobs = atoi(argv[1]);
+    char command[1000];
+
+    do
+    {
+        printf("Enter command > ");
+        
+        gets(command);
+
+        process_command(command);
+    } while (strcmp(command, "exit") != 0);
+    return 0;
+}
+
+
+
 
