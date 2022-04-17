@@ -128,6 +128,15 @@ void exec_job(struct Job *job)
     run_job_scheduler();
 }
 
+void submit_job(char *arr[], int size, char *command)
+{
+    printf("Actual command: %s\n", command);
+
+    
+    add_job_to_queue(arr, command);
+    run_job_scheduler();
+}
+
 void run_job_scheduler()
 {
 
