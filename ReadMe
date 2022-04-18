@@ -1,0 +1,21 @@
+//Homework 4(HW4.c): Job scheduler program.
+
+
+//To compile: 
+	gcc -Wall queue.c HW4.c -o HW4
+
+//run: compile
+	./HW4 <number of jobs>
+
+
+// submit <filename or filepath for job1> 1000 
+// submit <filename or filepath for job2> 1000 
+// submit <filename or filepath for job3> 1000 
+
+// showjobs
+
+// submithistory
+
+
+
+
